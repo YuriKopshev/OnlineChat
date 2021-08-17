@@ -1,0 +1,5 @@
+rootProject.name = 'OnlineChat'
+include 'Server'
+include 'Client'
+include 'Service'
+
