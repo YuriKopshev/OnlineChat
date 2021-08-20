@@ -19,7 +19,8 @@ public class ChatClientTest {
     private final String ADDRESS = "localhost";
     private final int PORT = 8080;
     @Test
-   public void  testPressNickname() throws IOException {
+    public void  testPressNickname() throws IOException {
+        //запускаю сервер перед этим вручную...
         Socket socket = mock(Socket.class);
         ChatClient chatClient = new ChatClient(socket,ADDRESS,PORT);
         chatClient.startClient();
@@ -29,5 +30,4 @@ public class ChatClientTest {
         when(socket.getOutputStream()).thenReturn(out);
         assertThat(out.toString(),is("Hello Yuri"));
     }
-
 }
