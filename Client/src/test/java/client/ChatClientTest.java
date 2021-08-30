@@ -1,13 +1,18 @@
 package client;
 
 import net.bytebuddy.matcher.ElementMatchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.isA;
@@ -22,12 +27,23 @@ public class ChatClientTest {
     public void  testPressNickname() throws IOException {
         //запускаю сервер перед этим вручную...
         Socket socket = mock(Socket.class);
-        ChatClient chatClient = new ChatClient(socket,ADDRESS,PORT);
-        chatClient.startClient();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ByteArrayInputStream in = new ByteArrayInputStream("Yuri".getBytes());
         when(socket.getInputStream()).thenReturn(in);
         when(socket.getOutputStream()).thenReturn(out);
+        ChatClient chatClient = new ChatClient(socket,ADDRESS,PORT);
+        chatClient.startClient();
         assertThat(out.toString(),is("Hello Yuri"));
+    }
+
+    @Test
+    public void startClientTest() throws IOException {
+        Socket socket = mock(Socket.class);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ByteArrayInputStream in = new ByteArrayInputStream("Yuri".getBytes());
+        when(socket.getInputStream()).thenReturn(in);
+        when(socket.getOutputStream()).thenReturn(out);
+        ChatClient chatClient = new ChatClient(socket,ADDRESS,PORT);
+        chatClient.startClient();
     }
 }

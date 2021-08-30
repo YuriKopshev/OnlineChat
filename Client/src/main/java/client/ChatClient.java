@@ -23,29 +23,24 @@ public class ChatClient {
     private String dateTime;
     private SimpleDateFormat format;
 
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+
     public ChatClient(Socket socket, String address, int port) {
         this.socket = socket;
         this.address = address;
         this.port = port;
     }
 
-//    public ChatClient(String address, int port, Socket socket) {
-//        this.address = address;
-//        this.port = port;
-//        try {
-//          this.socket = new Socket(address, port);
-//        } catch (IOException e) {
-//            AppHelper.loggerException(e);
-//        }
-//    }
-
     public void startClient() throws IOException {
-        this.socket = new Socket(address, port);
+        socket = new Socket(address, port);
         try {
             // потоки чтения из сокета / записи в сокет, и чтения с консоли
             inputUser = new BufferedReader(new InputStreamReader(System.in));
-            in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.pressNickname(); //  спросит имя
             new ReadMsg().start();
             new WriteMsg().start();
@@ -133,7 +128,7 @@ public class ChatClient {
 
     public static void main(String[] args) throws IOException {
         Socket socket1 = new Socket();
-       ChatClient chatClient = new ChatClient(socket1,IPADDRESS, getPort());
-       chatClient.startClient();
+        ChatClient chatClient = new ChatClient(socket1, IPADDRESS, getPort());
+        chatClient.startClient();
     }
 }
