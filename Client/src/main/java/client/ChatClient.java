@@ -16,8 +16,6 @@ public class ChatClient {
     private BufferedReader in;
     private BufferedWriter out;
     private BufferedReader inputUser;
-    private final String address;
-    private final int port;
     private String nickname;
     private Date date;
     private String dateTime;
@@ -28,14 +26,15 @@ public class ChatClient {
     }
 
 
-    public ChatClient(Socket socket, String address, int port) {
+    public ChatClient(Socket socket) {
         this.socket = socket;
-        this.address = address;
-        this.port = port;
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 
     public void startClient() throws IOException {
-        socket = new Socket(address, port);
         try {
             // потоки чтения из сокета / записи в сокет, и чтения с консоли
             inputUser = new BufferedReader(new InputStreamReader(System.in));
@@ -127,8 +126,8 @@ public class ChatClient {
     }
 
     public static void main(String[] args) throws IOException {
-        Socket socket1 = new Socket();
-        ChatClient chatClient = new ChatClient(socket1, IPADDRESS, getPort());
+        Socket socket1 = new Socket(IPADDRESS,getPort());
+        ChatClient chatClient = new ChatClient(socket1);
         chatClient.startClient();
     }
 }

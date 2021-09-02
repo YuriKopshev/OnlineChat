@@ -24,7 +24,7 @@ class AppHelperTest {
         String actual = "<message>Hello</message>";
         String expected = null;
         AppHelper.loggerInformation("Hello");
-        for (String readAllLine : Files.readAllLines(Path.of("./log_file.log.1"))) {
+        for (String readAllLine : Files.readAllLines(Path.of("./log_file.log"))) {
             if (readAllLine.contains("Hello")){
                 expected = readAllLine.trim();
             }
@@ -38,7 +38,7 @@ class AppHelperTest {
         String actual = "<method>loggerException</method>";
         String expected = null;
         AppHelper.loggerException(exception);
-        for (String readAllLine : Files.readAllLines(Path.of("./log_file.log.1"))) {
+        for (String readAllLine : Files.readAllLines(Path.of("./log_file.log"))) {
             if (readAllLine.contains("<method>loggerException</method>")){
                 expected = readAllLine.trim();
             }

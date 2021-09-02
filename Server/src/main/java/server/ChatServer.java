@@ -1,6 +1,7 @@
 package server;
 
 import netology.AppHelper;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -15,6 +16,10 @@ public class ChatServer extends Thread {
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         start();
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 
     @Override
@@ -66,7 +71,7 @@ public class ChatServer extends Thread {
 
     }
 
-   public void downService() {
+    public void downService() {
         try {
             if (!socket.isClosed()) {
                 socket.close();
