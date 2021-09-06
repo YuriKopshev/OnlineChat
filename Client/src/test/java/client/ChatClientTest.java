@@ -17,18 +17,20 @@ import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.*;
 
 public class ChatClientTest {
     private final String ADDRESS = "localhost";
     private final int PORT = 8080;
-    private static LinkedList<ChatServer> testServerList;
+
 
 
     @Test
     public void startClientTest() throws IOException {
+       Socket socket1 = new Socket();
+        Server server = new Server(socket1);
+        server.startServer();
         Socket socket = new Socket(ADDRESS,PORT);
         ChatClient chatClient = new ChatClient(socket);
         chatClient.startClient();

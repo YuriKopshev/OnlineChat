@@ -37,7 +37,7 @@ public class ChatServer extends Thread {
             } catch (IOException e) {
                 AppHelper.loggerException(e);
             }
-            try {
+
                 while (true) {
                     word = in.readLine();
                     AppHelper.loggerInformation(word + "\n");
@@ -49,9 +49,6 @@ public class ChatServer extends Thread {
                     for (ChatServer vr : Server.serverList) {
                         vr.send(word); // отослать принятое сообщение с привязанного клиента всем остальным включая его
                     }
-                }
-            } catch (NullPointerException e) {
-                AppHelper.loggerException(e);
             }
 
         } catch (IOException e) {
