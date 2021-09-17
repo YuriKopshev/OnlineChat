@@ -46,8 +46,10 @@ public class ChatServer extends Thread {
                         break; // если пришла пустая строка - выходим из цикла
                     }
                     System.out.println("Server message: " + word);
-                    for (ChatServer vr : Server.serverList) {
-                        vr.send(word); // отослать принятое сообщение с привязанного клиента всем остальным включая его
+                    synchronized (this) {
+                        for (ChatServer vr : Server.serverList) {
+                            vr.send(word); // отослать принятое сообщение с привязанного клиента всем остальным включая его
+                        }
                     }
             }
 
