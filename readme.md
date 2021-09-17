@@ -19,3 +19,7 @@
 • Код покрыт unit-тестами;
 
 • Серверная часть протестирована при помощи Telnet
+
+Добавлена в сборку Java CI with Gradle
+
+[![Java CI with Gradle](https://github.com/YuriKopshev/OnlineChat/actions/workflows/gradle.yml/badge.svg)](https://github.com/YuriKopshev/OnlineChat/actions/workflows/gradle.yml)
