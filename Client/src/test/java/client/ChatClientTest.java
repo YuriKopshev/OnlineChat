@@ -21,20 +21,26 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class ChatClientTest {
-    private final String ADDRESS = "localhost";
+    private final String IPADDRESS = "localhost";
     private final int PORT = 8080;
-
 
 
     @Test
     public void startClientTest() throws IOException {
-       Socket socket1 = new Socket();
+        Socket socket1 = new Socket();
         Server server = new Server(socket1);
-        server.startServer();
-        Socket socket = new Socket(ADDRESS,PORT);
-        ChatClient chatClient = new ChatClient(socket);
-        chatClient.startClient();
-        assertTrue(chatClient.getSocket().isConnected());
+        new Thread(() -> {
+            try {
+                server.startServer();
+                Socket socket = new Socket(IPADDRESS, PORT);
+                ChatClient chatClient = new ChatClient(socket);
+                chatClient.startClient();
+                assertTrue(chatClient.getSocket().isConnected());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @Test
@@ -45,17 +51,26 @@ public class ChatClientTest {
         when(socket.getInputStream()).thenReturn(ByteArrayInputStream.nullInputStream());
         ChatClient chatClient = new ChatClient(socket);
         chatClient.startClient();
-         ByteArrayInputStream inputStream = new ByteArrayInputStream("Yuri".getBytes());
-         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("Yuri".getBytes());
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         assertEquals("Yuri", reader.readLine());
     }
 
     @Test
     public void downServiceTest() throws IOException {
-        Socket socket = new Socket(ADDRESS,PORT);
-        ChatClient chatClient = new ChatClient(socket);
-        chatClient.startClient();
-        chatClient.downService();
-        assertTrue(chatClient.getSocket().isClosed());
+        Socket socket1 = new Socket();
+        Server server = new Server(socket1);
+        new Thread(() -> {
+            try {
+                server.startServer();
+                Socket socket = new Socket(IPADDRESS, PORT);
+                ChatClient chatClient = new ChatClient(socket);
+                chatClient.startClient();
+                chatClient.downService();
+                assertTrue(chatClient.getSocket().isClosed());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }
